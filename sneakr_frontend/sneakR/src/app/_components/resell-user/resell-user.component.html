@@ -1,0 +1,89 @@
+<body>
+    <!-- Navigációs sáv -->
+    <nav class="navbar">
+        <ul>
+            <li><a [routerLink]="['/resell']">←</a></li>
+            <li><a [routerLink]="['/resell-user']" class="active">Profil</a></li>
+            <li><a (click)="scroll(currentListings)">Jelenlegi Hirdetések</a></li>
+            <li><a (click)="scroll(pastListings)">Korábbi Hirdetések</a></li>
+            <li><a (click)="scroll(purchasedItems)">Vásárolt Termékek</a></li>
+            <li><a [routerLink]="['/login']">Kijelentkezés</a></li>
+        </ul>
+    </nav>
+
+    <!-- Felhasználói Profil -->
+    <section id="profile" class="profile-section">
+        <header>
+            <h1>Üdvözöllek, <span style="color: #2A7B47;">{{ user.nev || 'Felhasználó' }}</span>!</h1>
+            <div class="profile-info">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRrAIH5ePjPpc06-hopmyUZNsVbBPvZA0XGmQ&s"
+                    alt="Profilkép" class="avatar">
+                <p>📧 {{ user.email }}</p>
+                <p>🌟 Aktív hirdetések: {{ user.activeListingsCount }} | 🛍️ Eladott termékek: 3</p>
+            </div>
+        </header>
+    </section>
+
+    <!-- Jelenlegi Hirdetések -->
+    <section #currentListings id="current-listings" class="listings-section">
+        <h2>Jelenlegi Hirdetések</h2>
+        <div class="card-grid">
+            <div class="card">
+                <div class="card-img-container">
+                    <img src="https://static.nike.com/a/images/t_default/36979bbd-532a-4981-b091-7179d4240bdf/NIKE+AIR+MAX+90.png" alt="Nike Air Max 90">
+                </div>
+                <div class="card-content">
+                    <h3>Nike Air Max 90</h3>
+                    <p>💰 Ár: 30,000 Ft</p>
+                    <p>🏷️ Állapot: Újszerű</p>
+                    <button (click)="deleteListing($event)">🗑️ Törlés</button>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-img-container">
+                    <img src="https://sneakcenter.com/cdn/shop/products/adidas-yeezy-boost-350-v2-beluga-reflective-sneakcenter-1-34784995803403.png?v=1701593838" alt="Adidas Yeezy">
+                </div>
+                <div class="card-content">
+                    <h3>Adidas Yeezy Boost 350</h3>
+                    <p>💰 Ár: 80,000 Ft</p>
+                    <p>🏷️ Állapot: Kiváló</p>
+                    <button (click)="deleteListing($event)">🗑️ Törlés</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Korábbi Hirdetések -->
+    <section #pastListings id="past-listings" class="listings-section">
+        <h2>Korábbi Hirdetések</h2>
+        <div class="card-grid">
+            <div class="card">
+                <div class="card-img-container">
+                    <img src="https://sneakcenter.com/cdn/shop/products/nike-dunk-low-lottery-grey-sneakcenter-1-34784944488715.png?v=1701593658" alt="Nike Dunk Low">
+                </div>
+                <div class="card-content">
+                    <h3>Nike Dunk Low</h3>
+                    <p>⏳ Elkelt: 2024-11-15</p>
+                    <p>💸 Végső ár: 25,000 Ft</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Vásárolt Termékek -->
+    <section #purchasedItems id="purchased-items" class="listings-section">
+        <h2>Vásárolt Termékek</h2>
+        <div class="card-grid">
+            <div class="card">
+                <div class="card-img-container">
+                    <img src="https://www.buzzsneakers.hu/files/thumbs/files/images/slike_proizvoda/media/VN0/VN000CR5B9M/images/thumbs_800/VN000CR5B9M_800_800px.jpg" alt="Vans Old Skool">
+                </div>
+                <div class="card-content">
+                    <h3>Vans Old Skool</h3>
+                    <p>📅 Vásárlás dátuma: 2024-12-01</p>
+                    <p>⭐ Értékelés: 5/5</p>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
