@@ -82,7 +82,7 @@ public Response getShoesNamePrice() {
 
     try {
         // Call the service to get the list of users
-        ArrayList<Cipok> shoesList = layer.getAllShoes();  // Assuming layer.getAllUsers() returns an ArrayList<User>
+        ArrayList<Cipok> shoesList = layer.getShoesNamePrice();  // Assuming layer.getAllUsers() returns an ArrayList<User>
 
         // Initialize a JSON array to store user data
         JSONArray shoesArray = new JSONArray();

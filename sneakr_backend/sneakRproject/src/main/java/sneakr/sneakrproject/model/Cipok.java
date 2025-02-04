@@ -87,13 +87,9 @@ public class Cipok implements Serializable {
 
     public Cipok() {
     }
-
-    public Cipok(Integer id) {
-        this.id = id;
-    }
-    
-    public Cipok(String nev, String img) {
+    public Cipok(String nev,Float ar, String img) {
       this.nev = nev;
+      this.ar = ar;
       this.img = img;
     }
 
