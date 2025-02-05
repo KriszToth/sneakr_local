@@ -16,6 +16,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 import sneakr.sneakrproject.model.Cipok;
 import sneakr.sneakrproject.service.ShoeService;
@@ -113,6 +114,36 @@ public Response getShoesNamePrice() {
         return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(responseObj.toString()).type(MediaType.APPLICATION_JSON).build();
     }
 }  
+
+@POST
+@Path("uploadShoes")
+@Consumes(MediaType.APPLICATION_JSON)
+public Response uploadShoes(String bodyString) {
+    try {
+        JSONObject body = new JSONObject(bodyString);
+        
+        Cipok u = new Cipok(
+            body.getString("nev"),
+            body.getString("marka"),
+            body.getString("nem"), 
+            body.getString("allapot"),
+            body.getInt("meret"),
+            (float) body.getDouble("ar"),
+            body.optString("img", "")
+        );
+        
+        JSONObject obj = layer.uploadShoes(u);
+        return Response.status(obj.getInt("statusCode"))
+                       .entity(obj.toString())
+                       .build();
+    } catch (JSONException e) {
+        JSONObject error = new JSONObject();
+        error.put("status", "InvalidRequest");
+        error.put("statusCode", 400);
+        error.put("message", "Malformed JSON input");
+        return Response.status(400).entity(error.toString()).build();
+    }
+}
 
 @GET
 @Path("getShoesByAir")

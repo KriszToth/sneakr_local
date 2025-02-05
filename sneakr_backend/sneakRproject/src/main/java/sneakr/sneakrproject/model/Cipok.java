@@ -11,6 +11,7 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -21,6 +22,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.ParameterMode;
+import javax.persistence.Persistence;
 import javax.persistence.StoredProcedureQuery;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -40,6 +42,26 @@ import static sneakr.sneakrproject.model.Userek.emf;
     @NamedQuery(name = "Cipok.findByAllapot", query = "SELECT c FROM Cipok c WHERE c.allapot = :allapot"),
     @NamedQuery(name = "Cipok.findByAr", query = "SELECT c FROM Cipok c WHERE c.ar = :ar")})
 public class Cipok implements Serializable {
+
+    @Size(max = 100)
+    @Column(name = "nem")
+    private String nem;
+    
+    
+    public String getNem() {
+        return nem;
+    }
+
+    public void setNem(String nem) {
+        this.nem = nem;
+    }
+
+    @Size(max = 100)
+    @Column(name = "marka")
+    private String marka;
+
+    @Column(name = "meret")
+    private Integer meret;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -68,22 +90,16 @@ public class Cipok implements Serializable {
     @JoinColumn(name = "exkluziv_id", referencedColumnName = "id")
     @ManyToOne
     private Exkluzivok exkluzivId;
-    @JoinColumn(name = "marka_id", referencedColumnName = "id")
     @ManyToOne
-    private Markak markaId;
-    @JoinColumn(name = "meret_id", referencedColumnName = "id")
-    @ManyToOne
-    private Meretek meretId;
-    @JoinColumn(name = "nem_id", referencedColumnName = "id")
-    @ManyToOne
-    private Nemek nemId;
-    @JoinColumn(name = "ujdonsag_id", referencedColumnName = "id")
-    @ManyToOne
+    @JoinColumn(name = "ujdonsag_id")  // This is critical
     private Ujdonsagok ujdonsagId;
     @OneToMany(mappedBy = "cipokId")
     private Collection<RendelesTetelek> rendelesTetelekCollection;
     @OneToMany(mappedBy = "cipokId")
     private Collection<ShoppingSession> shoppingSessionCollection;
+    
+    static EntityManagerFactory emf = Persistence.createEntityManagerFactory("sneakr_sneakRproject_war_1.0-SNAPSHOTPU");
+    
 
     public Cipok() {
     }
@@ -97,7 +113,25 @@ public class Cipok implements Serializable {
         this.id = id;
         this.img = img;
     }
+    
+    public Cipok(String nev, String marka,String nem, String allapot, Integer meret,Float ar, String img) {
+        EntityManager em = emf.createEntityManager();
+        this.nev = nev;
+        this.marka = marka;
+        this.nem = nem;
+        this.allapot = allapot;
+        this.meret = meret;
+        this.ar = ar;
+        this.img = img;
+    }
 
+    public Integer getMeret() {
+        return meret;
+    }
+
+    public void setMeret(Integer meret) {
+        this.meret = meret;
+    }
     public Integer getId() {
         return id;
     }
@@ -153,29 +187,13 @@ public class Cipok implements Serializable {
     public void setExkluzivId(Exkluzivok exkluzivId) {
         this.exkluzivId = exkluzivId;
     }
-
-    public Markak getMarkaId() {
-        return markaId;
+    
+    public String getMarka() {
+        return marka;
     }
 
-    public void setMarkaId(Markak markaId) {
-        this.markaId = markaId;
-    }
-
-    public Meretek getMeretId() {
-        return meretId;
-    }
-
-    public void setMeretId(Meretek meretId) {
-        this.meretId = meretId;
-    }
-
-    public Nemek getNemId() {
-        return nemId;
-    }
-
-    public void setNemId(Nemek nemId) {
-        this.nemId = nemId;
+    public void setMarka(String marka) {
+        this.marka = marka;
     }
 
     public Ujdonsagok getUjdonsagId() {
@@ -280,6 +298,46 @@ public class Cipok implements Serializable {
     public ArrayList<Cipok> getShoesByAir() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+    
+    
+    
+    public Boolean uploadShoes(Cipok u) {
+        EntityManager em = emf.createEntityManager();
+        try {
+            StoredProcedureQuery spq = em.createStoredProcedureQuery("uploadShoes");
+            
+            spq.registerStoredProcedureParameter("nevIN", String.class, ParameterMode.IN);
+            spq.registerStoredProcedureParameter("markaIN", String.class, ParameterMode.IN);
+            spq.registerStoredProcedureParameter("nemIN", String.class, ParameterMode.IN);
+            spq.registerStoredProcedureParameter("allapotIN", String.class, ParameterMode.IN);
+            spq.registerStoredProcedureParameter("meretIN", Integer.class, ParameterMode.IN);
+            spq.registerStoredProcedureParameter("arIN", Float.class, ParameterMode.IN);
+            spq.registerStoredProcedureParameter("imgIN", String.class, ParameterMode.IN);
+            
+            spq.setParameter("nevIN", u.getNev());
+            spq.setParameter("markaIN", u.getMarka());
+            spq.setParameter("nemIN", u.getNem());
+            spq.setParameter("allapotIN", u.getAllapot());
+            spq.setParameter("meretIN", u.getMeret());
+            spq.setParameter("arIN", u.getAr());
+            spq.setParameter("imgIN", u.getImg());
+          
+            spq.execute();
+            
+            return true;
+        } catch (Exception e) {
+            System.err.println("Hiba: " + e.getLocalizedMessage());
+            return false;
+        } finally{
+            em.clear();
+            em.close();
+        }
+    }
+
+
+ 
+
+
 
     
 }
