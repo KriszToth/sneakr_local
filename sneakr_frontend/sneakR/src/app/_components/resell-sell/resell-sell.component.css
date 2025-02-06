@@ -90,7 +90,7 @@
 
 .input-group label {
     position: absolute;
-    left: 1rem; /* Changed from 5.5% to fixed value */
+    left: 8px; /* Changed from 5.5% to fixed value */
     top: 50%;
     transform: translateY(-50%); /* Removed X-axis translation */
     color: rgba(255, 255, 255, 0.6);
@@ -142,27 +142,37 @@
     color: #2A7B47;
 }
 
+.input-group input:focus + label,
+.input-group select:focus + label,
+.input-group textarea:focus + label,
+.input-group input:not(:placeholder-shown) + label,
+.input-group select:valid + label,
+.input-group textarea:not(:placeholder-shown) + label {
+    transform: translateY(-2.9rem) translateX(-12.5px) scale(0.9);
+    color: #2A7B47 !important;
+    z-index: 2;
+    background: rgba(40, 40, 40, 0.8);
+    padding: 0 5px;
+}
+
 .input-group input:focus,
-.input-group textarea:focus,
 .input-group select:focus,
+.input-group textarea:focus,
 .input-group input:not(:placeholder-shown),
-.input-group textarea:not(:placeholder-shown),
-.input-group select:valid {
-    border-color: #2A7B47;
+.input-group select:valid,
+.input-group textarea:not(:placeholder-shown) {
+    border-color: #2A7B47 !important; 
     background: rgba(42, 123, 71, 0.1);
 }
 
-
-
-.input-group textarea:focus + label,
-.input-group textarea:not(:placeholder-shown) + label {
+.input-group select:valid + label,
+.input-group select:focus + label {
     transform: translateY(-2.9rem) translateX(-12.5px) scale(0.9);
     color: #2A7B47;
     z-index: 2;
     background: rgba(40, 40, 40, 0.8);
     padding: 0 5px;
 }
-
 
 
 .input-group select option {
@@ -251,10 +261,12 @@
     justify-content: center;
     align-items: center;
     z-index: 1000;
+    
 }
 
 .success-modal.active {
     display: flex;
+    
 }
 
 .modal-content {
@@ -304,11 +316,13 @@
 
 .validation-modal {
     display: none;
+    
   }
   
   .validation-modal.active {
     display: flex !important;
     animation: modalFadeIn 0.3s ease;
+    
   }
 
 .validation-modal .modal-icon.error {
@@ -335,6 +349,7 @@
     max-height: 300px;
     border-radius: 8px;
     object-fit: contain;
+    
 }
 
 .upload-label span {
@@ -370,7 +385,6 @@ select:focus {
     box-shadow: 0 0 0 2px rgba(42, 123, 71, 0.5);
 }
 
-/* Add to existing modal styles */
 .fa-check-circle {
     color: #2A7B47;
     animation: checkScale 0.6s ease;
