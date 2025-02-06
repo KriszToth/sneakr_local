@@ -13,6 +13,8 @@ import { AboutComponent } from './_components/about/about.component';
 import { ContactComponent } from './_components/contact/contact.component';
 import { GYIKComponent } from './_components/gyik/gyik.component';
 import { WebshopUserComponent } from './_components/webshop-user/webshop-user.component';
+import { ProductsComponent } from './_components/products/products.component';
+import { WebshopCartComponent } from './_components/webshop-cart/webshop-cart.component';
 
 export const routes: Routes = [
     {path:'', redirectTo:'/login', pathMatch:'full'},
@@ -29,6 +31,8 @@ export const routes: Routes = [
     {path:'about', component:AboutComponent},
     {path:'GYIK', component:GYIKComponent},
     {path:'contact', component:ContactComponent},
+    {path: 'products', component:ProductsComponent},
+    {path: 'webshop-cart', component:WebshopCartComponent},
     {path:'webshop-user', component:WebshopUserComponent}
     
 

@@ -26,7 +26,7 @@ export class ResellUserComponent implements OnInit  {
     const userData = localStorage.getItem('currentUser');
     if (userData) {
       this.user = JSON.parse(userData);
-      this.user.activeListingsCount = 2; // You can update this from API later
+      this.user.activeListingsCount = 2; 
     } else {
       this.router.navigate(['/login']);
     }
