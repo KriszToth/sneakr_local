@@ -1,8 +1,17 @@
 // user.model.ts
+
+export interface UserResponse {
+  users: User[];
+  statusCode: number;
+}
+
+
 export interface User {
   id: number;
-  name: string;   // Mapped from 'nev'
+  nev: string;   // Mapped from 'nev'
   email: string;
   avatar?: string;
-  admin: boolean;
+  jelszo?: string;
+  admin: string;
+  createdAt?: Date;
 }
