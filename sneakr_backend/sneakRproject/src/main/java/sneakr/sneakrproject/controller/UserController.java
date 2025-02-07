@@ -6,6 +6,7 @@ package sneakr.sneakrproject.controller;
 
 import java.util.ArrayList;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -20,6 +21,7 @@ import org.json.JSONObject;
 import sneakr.sneakrproject.model.Cipok;
 import sneakr.sneakrproject.model.Userek;
 import sneakr.sneakrproject.service.UserService;
+import javax.ws.rs.PathParam;
 
 /**
  *
@@ -40,6 +42,17 @@ public class UserController {
      * Retrieves representation of an instance of com.iakk.backendvizsga.controller.UserController
      * @return an instance of java.lang.String
      */
+    
+     // ITT JÁRTAM
+    @DELETE
+    @Path("deleteUser/{userId}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response deleteUser(@PathParam("userId") Integer userId) {
+        JSONObject obj = layer.deleteUser(userId);
+        return Response.status(obj.getInt("statusCode")).entity(obj.toString()).type(MediaType.APPLICATION_JSON).build();
+    }
+     // IDÁIG JÁRTAM
+     
     @GET
     @Produces(MediaType.APPLICATION_XML)
     public String getXml() {

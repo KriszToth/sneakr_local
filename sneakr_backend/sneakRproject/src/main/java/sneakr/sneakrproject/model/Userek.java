@@ -294,6 +294,27 @@ public class Userek implements Serializable {
         }
     }
     
+    // ITT JÁRTAM
+    
+    public static boolean deleteUser(Integer userId) {
+    EntityManager em = emf.createEntityManager();
+    try {
+        StoredProcedureQuery spq = em.createStoredProcedureQuery("deleteUser");
+        spq.registerStoredProcedureParameter("userId", Integer.class, ParameterMode.IN);
+        spq.setParameter("userId", userId);
+        spq.execute();
+        return true;
+    } catch (Exception e) {
+        System.err.println("Hiba a felhasználó törlésekor: " + e.getMessage());
+        return false;
+    } finally {
+        em.clear();
+        em.close();
+    }
+}
+        // IDÁIG JÁRTAM 
+    
+    
     public static ArrayList<Userek> getAllUsers() {
     EntityManager em = emf.createEntityManager();
     ArrayList<Userek> userList = new ArrayList<>();
