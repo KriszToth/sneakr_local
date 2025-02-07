@@ -19,6 +19,10 @@ export class WebshopComponent implements OnInit {
   menuState: { [key: string]: boolean } = {};
   loading = true;
 
+  selectedProduct: any = null;
+  selectedSize: string | null = null;
+  sizes: string[] = ['36', '37', '38', '39', '40', '41', '42', '43', '44', '45'];
+
   constructor(private shoeService: ShoeService) {}
 
   @ViewChild('best') bestSection!: ElementRef;
@@ -57,6 +61,34 @@ export class WebshopComponent implements OnInit {
   scrollToBest() {
     if (this.bestSection) {
       this.bestSection.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
+
+  openProductModal(product: any) {
+    this.selectedProduct = product;
+    this.selectedSize = null;
+    document.body.style.overflow = 'hidden';
+  }
+
+  closeProductModal() {
+    this.selectedProduct = null;
+    document.body.style.overflow = 'auto';
+  }
+
+  selectSize(size: string) {
+    this.selectedSize = size;
+  }
+
+  addToCart() {
+    if (this.selectedProduct && this.selectedSize) {
+      // Add your cart logic here
+      console.log('Added to cart:', {
+        product: this.selectedProduct,
+        size: this.selectedSize
+      });
+      
+      // Close modal after adding to cart
+      this.closeProductModal();
     }
   }
 }

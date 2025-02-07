@@ -118,7 +118,22 @@
 <section class="products-section" id="new">
     <h2>Újdonságok</h2>
     <div class="product-grid">
-        <div class="product-card" *ngFor="let shoe of newShoes">
+      <div class="product-card" *ngFor="let shoe of newShoes" (click)="openProductModal(shoe)">
+        <div class="image-container">
+            <img [src]="shoe.img" [alt]="shoe.nev">
+        </div>
+        <div class="text-container">
+            <p>{{ shoe.nev }}</p>
+            <p>{{ shoe.ar | number }} Ft</p>
+        </div>
+    </div>
+    </div>
+</section>
+
+<section class="products-section" id="best" #best>
+    <h2>Best Sellerek</h2>
+    <div class="product-grid">
+      <div class="product-card" *ngFor="let shoe of bestSellerShoes" (click)="openProductModal(shoe)">
             <div class="image-container">
                 <img [src]="shoe.img" [alt]="shoe.nev">
             </div>
@@ -130,20 +145,32 @@
     </div>
 </section>
 
-<section class="products-section" id="best" #best>
-    <h2>Best Sellerek</h2>
-    <div class="product-grid">
-        <div class="product-card" *ngFor="let shoe of bestSellerShoes">
-            <div class="image-container">
-                <img [src]="shoe.img" [alt]="shoe.nev">
+<div class="product-modal" [class.active]="selectedProduct">
+    <div class="modal-content" *ngIf="selectedProduct">
+        <span class="close" (click)="closeProductModal()">&times;</span>
+        <div class="modal-image">
+            <img [src]="selectedProduct.img" [alt]="selectedProduct.nev">
+        </div>
+        <div class="modal-details">
+            <h3>{{ selectedProduct.nev }}</h3>
+            <p class="price">{{ selectedProduct.ar | number }} Ft</p>
+            
+            <div class="size-info">
+                <h4>Elérhető méret:</h4>
+                <div class="size-value">
+                    {{ selectedProduct.meret }}
+                </div>
             </div>
-            <div class="text-container">
-                <p>{{ shoe.nev }}</p>
-                <p>{{ shoe.ar | number }} Ft</p>
-            </div>
+
+            <button class="add-to-cart" (click)="addToCart()">
+                <i class="fas fa-cart-plus"></i> Kosárba
+            </button>
+            
+            <p class="description">{{ selectedProduct.leiras }}</p>
         </div>
     </div>
-</section>
+</div>
+
   
   <footer class="footer" id="footer">
       <div class="footer-content">

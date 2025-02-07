@@ -13,15 +13,21 @@ import { RouterLink } from '@angular/router';
   styleUrls: ['./webshop-cart.component.css']
 })
 export class WebshopCartComponent {
+  showCard = false;
+
   constructor(public cartService: CartService) {}
 
   removeItem(index: number) {
     this.cartService.removeFromCart(index);
   }
 
+  showCardDetails(paymentMethod: string) {
+    this.showCard = paymentMethod === 'bankkártya';
+  }
+
   checkout() {
-    // Itt lehetne fizetési logika
-    alert('Köszönjük a vásárlást!');
+    // Implement backend integration here
+    alert('Köszönjük a vásárlást! A rendelését feldolgozzuk.');
     this.cartService.clearCart();
   }
 }
