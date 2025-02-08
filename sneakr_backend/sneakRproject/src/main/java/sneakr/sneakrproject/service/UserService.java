@@ -212,8 +212,7 @@ public class UserService {
 
     return userList;
 }
-    
-    // ITT JÁRTAM LEFELE
+
     
     public JSONObject deleteUser(Integer userId) {
     JSONObject toReturn = new JSONObject();
@@ -236,35 +235,6 @@ public class UserService {
     toReturn.put("statusCode", statusCode);
     return toReturn;
 }
-    // IDÁIG JÁRTAM
-    
-    public JSONObject getCurrentUser(Integer userId) {
-    JSONObject toReturn = new JSONObject();
-    String status = "success";
-    int statusCode = 200;
-
-    try {
-        Userek user = new Userek(userId);
-        if (user.getId() == null) {
-            status = "UserNotFound";
-            statusCode = 404;
-        } else {
-            JSONObject result = new JSONObject();
-            result.put("id", user.getId());
-            result.put("nev", user.getNev());
-            result.put("email", user.getEmail());
-            result.put("admin", user.getAdmin());
-            toReturn.put("result", result);
-        }
-    } catch (Exception e) {
-        status = "ServerError";
-        statusCode = 500;
-        System.err.println("Error fetching user: " + e.getMessage());
-    }
-
-    toReturn.put("status", status);
-    toReturn.put("statusCode", statusCode);
-    return toReturn;
-}
+   
    
 }

@@ -46,10 +46,11 @@ public class ShoeService {
 
     return shoesList;
 }
-    public ArrayList<Cipok> getShoesByAir() {
+    
+    public ArrayList<Cipok> getAllShoesData() {
     ArrayList<Cipok> shoesList = new ArrayList<>(); 
     try {
-        shoesList = layer.getShoesByAir();     
+        shoesList = layer.getAllShoesData();     
         
     } catch (Exception e) {
         System.err.println("Error fetching shoes: " + e.getMessage());

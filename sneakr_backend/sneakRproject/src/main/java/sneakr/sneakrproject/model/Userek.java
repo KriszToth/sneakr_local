@@ -78,29 +78,23 @@ public class Userek implements Serializable {
     }
     
     public Userek(Integer id) {
-    EntityManager em = emf.createEntityManager();
-    try {
-        StoredProcedureQuery spq = em.createStoredProcedureQuery("getUserById");
-        spq.registerStoredProcedureParameter("userId", Integer.class, ParameterMode.IN);
-        spq.setParameter("userId", id);
-        spq.execute();
-
-        List<Object[]> resultList = spq.getResultList();
-        if (!resultList.isEmpty()) {
-            Object[] o = resultList.get(0);
-            this.id = Integer.valueOf(o[0].toString());
-            this.nev = o[1].toString();
-            this.email = o[2].toString();
-            this.jelszo = o[3].toString();
-            this.admin = o[4].toString();
+        EntityManager em = emf.createEntityManager();
+        
+        try {
+            Userek u = em.find(Userek.class, id);
+            
+            this.id = u.getId();
+            this.nev = u.getNev();
+            this.email = u.getEmail();
+            this.jelszo = u.getJelszo();
+            this.admin = u.getAdmin();
+        } catch (Exception ex) {
+            System.err.println("Hiba: " + ex.getLocalizedMessage());
+        } finally {
+            em.clear();
+            em.close();
         }
-    } catch (Exception ex) {
-        System.err.println("Hiba: " + ex.getLocalizedMessage());
-    } finally {
-        em.clear();
-        em.close();
     }
-}
     public Userek(Integer id, String nev, String email, String password, String admin) {
         this.id = id;
         this.nev = nev;
@@ -211,8 +205,6 @@ public class Userek implements Serializable {
     public String toString() {
         return "sneakr.sneakrproject.model.Userek[ id=" + id + " ]";
     }
-    
-    
     
     public Userek login(String email, String password){
         EntityManager em = emf.createEntityManager();

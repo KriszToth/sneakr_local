@@ -114,6 +114,20 @@ public class Cipok implements Serializable {
         this.img = img;
     }
     
+    public Cipok(String nev, String marka,String nem, String allapot, Integer meret,Float ar,Akciok akcioId,Exkluzivok exkluzivId,Ujdonsagok ujdonsagId, String img) {
+        this.id = id;
+        this.nev = nev;
+        this.marka = marka;
+        this.nem = nem;
+        this.allapot = allapot;
+        this.meret = meret;
+        this.ar = ar;
+        this.akcioId = akcioId;
+        this.exkluzivId = exkluzivId;
+        this.ujdonsagId = ujdonsagId;
+        this.img = img;
+    }
+    
     public Cipok(String nev, String marka,String nem, String allapot, Integer meret,Float ar, String img) {
         EntityManager em = emf.createEntityManager();
         this.nev = nev;
@@ -276,12 +290,13 @@ public class Cipok implements Serializable {
 
     return shoesList;
 }
-    public static ArrayList<Cipok> getShoesByAir(Cipok u) {
+    
+    public static ArrayList<Cipok> getAllShoesData() {
     EntityManager em = emf.createEntityManager();
     ArrayList<Cipok> shoesList = new ArrayList<>();
 
     try {
-        StoredProcedureQuery spq = em.createStoredProcedureQuery("getShoesByAir", Cipok.class);
+        StoredProcedureQuery spq = em.createStoredProcedureQuery("getAllShoesData", Cipok.class);
         spq.execute();
         shoesList = new ArrayList<>(spq.getResultList());
 
@@ -294,13 +309,7 @@ public class Cipok implements Serializable {
 
     return shoesList;
 }
-
-    public ArrayList<Cipok> getShoesByAir() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    
-    
-    
+  
     public Boolean uploadShoes(Cipok u) {
         EntityManager em = emf.createEntityManager();
         try {

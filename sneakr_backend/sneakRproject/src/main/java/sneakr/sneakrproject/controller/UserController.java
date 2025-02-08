@@ -156,14 +156,4 @@ public Response getAllUsers() {
     }
 }  
 
-@GET
-@Path("/current-user/{userId}")
-@Produces(MediaType.APPLICATION_JSON)
-public Response getCurrentUser(@PathParam("userId") Integer userId) {
-    JSONObject obj = layer.getCurrentUser(userId);
-    return Response.status(obj.getInt("statusCode"))
-                  .entity(obj.toString())
-                  .type(MediaType.APPLICATION_JSON)
-                  .build();
-}
 }
