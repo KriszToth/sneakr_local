@@ -156,65 +156,14 @@ public Response getAllUsers() {
     }
 }  
 
-//@GET
-//@Path("getAllShoes")
-//@Produces(MediaType.APPLICATION_JSON)
-//public Response getAllShoes() {
-//    JSONObject responseObj = new JSONObject();
-//
-//    try {
-//        // Call the service to get the list of users
-//        ArrayList<Cipok> shoesList = layer.getAllShoes();  // Assuming layer.getAllUsers() returns an ArrayList<User>
-//
-//        // Initialize a JSON array to store user data
-//        JSONArray shoesArray = new JSONArray();
-//
-//        // Iterate over the user list and convert each user to a JSONObject
-//        for (Cipok u : shoesList) {
-//            JSONObject shoeJson = new JSONObject();
-//            shoeJson.put("nev", u.getNev());
-//            shoeJson.put("img", u.getImg());
-//
-//            // Add the user JSON object to the array
-//            shoesArray.put(shoeJson);
-//        }
-//
-//        // Add the users array to the response object
-//        responseObj.put("statusCode", 200);
-//        System.out.println("Lekért cipők száma: " + shoesList.size());
-//        responseObj.put("shoes", shoesArray);
-//
-//        // Return the response with a 200 OK status
-//        return Response.ok(responseObj.toString(), MediaType.APPLICATION_JSON).build();
-//
-//    } catch (Exception e) {
-//        // Handle any exceptions
-//        responseObj.put("statusCode", 500);
-//        responseObj.put("message", "Failed to retrieve users");
-//        responseObj.put("error", e.getMessage());
-//        return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(responseObj.toString()).type(MediaType.APPLICATION_JSON).build();
-//    }
-//}  
-//    @GET
-//    @Produces(MediaType.APPLICATION_XML)
-//    public String getXml() {
-//        //TODO return proper representation object
-//        throw new UnsupportedOperationException();
-//    }
-//    
-//    @PUT
-//    @Consumes(MediaType.APPLICATION_XML)
-//    public void putXml(String content) {
-//    }
-//    
-//    @POST
-//    @Path("login")
-//    @Consumes(MediaType.APPLICATION_JSON)
-//    public Response login(String bodyString){
-//        JSONObject body = new JSONObject(bodyString);
-//        
-//        JSONObject obj = layer.login(body.getString("email"), body.getString("password"));
-//        return Response.status(obj.getInt("statusCode")).entity(obj.toString()).type(MediaType.APPLICATION_JSON).build();
-//    }
-    
+@GET
+@Path("/current-user/{userId}")
+@Produces(MediaType.APPLICATION_JSON)
+public Response getCurrentUser(@PathParam("userId") Integer userId) {
+    JSONObject obj = layer.getCurrentUser(userId);
+    return Response.status(obj.getInt("statusCode"))
+                  .entity(obj.toString())
+                  .type(MediaType.APPLICATION_JSON)
+                  .build();
+}
 }
